@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "EcI9jiBLXrESH3wmXl+sGVmit0WpXxuW9eaFG0Cq6G+HWMR3iObLPwqOiIuiutvhREzcXk15qtH155qJEUUG8g==",
+  "dgSpecHash": "2kOtdyw2pACbfmtG/NY6d1TcpwWqDaz7qxHKvEGp1blwkByBJSDF7qtjoNwudSIXAH/PKQGBk1ljuyXb8Y8Tnw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\sw\\Desktop\\cluster\\microservices\\api-gateway\\common\\common.csproj",
+  "projectFilePath": "C:\\Users\\Администратор\\Desktop\\cluster\\microservices\\api-gateway\\common\\common.csproj",
   "expectedPackageFiles": [],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1803",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "You are running the 'restore' operation with an 'HTTP' source, 'http://192.168.0.8:5555/v3/index.json'. Non-HTTPS access will be removed in a future version. Consider migrating to an 'HTTPS' source."
+    }
+  ]
 }

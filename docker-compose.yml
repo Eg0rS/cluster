@@ -1,6 +1,16 @@
 version: '3.9'
 services:
 
+  nginx:
+    ports:
+    - '8080:80'
+    restart: always
+    networks:
+      - backend
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+
   database:
     image: postgres
     restart: always
@@ -18,8 +28,6 @@ services:
   api-geteway:
     build:
      context: api-gateway
-    ports:
-      - "80:80"
     depends_on:
       - database
     networks:
@@ -30,8 +38,7 @@ services:
         limits:
           memory: 1024M
         reservations:
-          memory: 200M
-
+          memory: 200M   
 
 networks:
   backend:
