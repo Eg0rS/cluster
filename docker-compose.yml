@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    volumes:
+     - pg-data:/var/lib/postgresql/data
+
+  api-geteway:
+    build:
+     context: api-gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - database
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 200M
+
+
+networks:
+  backend:
+
+volumes:
+  pg-data:
