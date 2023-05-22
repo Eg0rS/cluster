@@ -1,0 +1,8 @@
+{
+  "port": 80,
+  "token_secret": "Gec9ZIrpi9wfnVo7qwqh6gWj0J9KHZ66",
+  "server_timeout_sec": 180,
+  "request_forwarder_timeout_sec": 600,
+  "jwt_header": "{\"alg\":\"HS256\",\"typ\":\"JWT\"}",
+  "auth_service": "http://auth"
+}
