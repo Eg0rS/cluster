@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d910a599-f5a1-4eab-b31d-5acb9a3be2dc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.config/local.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.config/prod.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/authenticator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/authenticator_by_guid.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/authenticator_by_password_hash.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/dtos.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/generation/access_token_claims.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/generation/access_token_generator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/generation/refresh_token_claims.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/generation/refresh_token_generator.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/generation/refresh_token_parser.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/generation/role_checker.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/authentication/refresher.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/handlers/disable_login.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/handlers/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/handlers/is_avalable_token.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/handlers/logout.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/handlers/models.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/handlers/refresh_token_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/handlers/token_request_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/json_handler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/mux.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/env.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/settings.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db_guid_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db_refresh_token_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db_user_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db_user_role_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/erros.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/models.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/mongo_available_users.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/repositories.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jwt/header.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jwt/jwt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/microservices.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/models_logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/userservice/models.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/userservice/usermanager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/root.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tokencache/cache.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/dbUtils/db_connector.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/dbUtils/errors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/dbUtils/pg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/httpUtils/error_handling.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/jsonUtils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/testUtils/consts.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/testUtils/dal/fake_refresh_token_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/testUtils/dal/fake_user_repository_impl.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/testUtils/dal/fake_user_role_repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/testUtils/microservices/fake_logger_slack.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/testUtils/microservices/fake_password_hasher.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/testUtils/test_auth_client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/.config/local.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/.config/prod.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/app.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/config/config.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/config/settings.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/database/migration.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/database/migrations/001_initial.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/database/pgx.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/lib/pctx/pctx.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../migration-service/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../auth-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../auth-gateway/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../auth-gateway/api/root/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/../../auth-gateway/api/root/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../auth-gateway/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../../auth-gateway/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../auth-gateway/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../../auth-gateway/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../register-service/register-service/obj/Debug/net7.0/register-service.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../register-service/register-service/obj/Debug/net7.0/register-service.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../nginx/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../nginx/nginx.conf" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.20.2" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QCWm303G9lY8zmY1X3qpwj5xHR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "C:/Users/Администратор/Desktop/cluster/microservices/auth",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Администратор\Desktop\cluster\microservices\auth" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>

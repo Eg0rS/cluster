@@ -1,0 +1,24 @@
+{
+  "port": 8080,
+  "db_connection_string": "sqlserver://argonaut:OPjIXdNewDV4LCF8@192.168.0.2?database=Feature1",
+  "mongo_db_connection_string": "mongodb://192.168.0.53:46927/?connect=direct",
+  "mongo_db_name_account": "F1AccountTemp",
+  "microservice_host_password-hasher": "capi.f1.gospodaprogrammisty.ru",
+  "microservice_host_logger-slack": "logger-slack",
+  "microservice_host_logger": "logger",
+  "microservice_account_service": "http://account-service",
+  "client_secret": "q8FB833CCFYETeYRn9rEoTqsx0yaE8Fz",
+  "jwt_secret": "DhY5bNeb5n7R9DAqizaDB7klaUyDqHlV",
+  "refresh_token_secret": "wHnAg4MHONLLQj66YFpQGDnRddbZPPc6",
+  "access_token_ttl": 86400,
+  "refresh_token_ttl": 604800,
+  "super_password": "e4iDSJcPgsD6pwH",
+  "registration_confirm_url": "https://f1.gospodaprogrammisty.ru/set-password",
+  "clickhouse_connection_string": "tcp://127.0.0.1:6666?debug=true",
+  "kafka": "192.168.0.73:9092",
+  "kafka_auth_topic": "auth_dev",
+  "redis": {
+    "addr":"click:6379",
+    "password": "BeP1pA11lWUG5ANw7E/J/ykmqYdUHrzXP4ijFFvpOEMnetnw64/HW/b/nXtHUQvhswhRrErpeox1ATIQ"
+  }
+}

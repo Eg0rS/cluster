@@ -1,0 +1,11 @@
+FROM golang:1.20-alpine
+
+EXPOSE 80
+
+WORKDIR /go/src/register-service
+COPY . .
+RUN chmod +x ./start.sh
+
+RUN go install -mod vendor
+
+ENTRYPOINT ./start.sh

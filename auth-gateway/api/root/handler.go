@@ -3,6 +3,7 @@ package root
 import (
 	"auth-gateway/api/root/authorization"
 	"auth-gateway/config"
+	"auth-gateway/lib/authorize"
 	"auth-gateway/microservices"
 	"auth-gateway/target"
 	"auth-gateway/utils/httpUtils"
@@ -33,7 +34,7 @@ type Handler struct {
 func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var accessToken = &authorization.JWT{}
 	var err error
-	accessTokenString := authorization.GetToken(r)
+	accessTokenString := authorize.GetToken(r)
 	authHeader := authorization.NewAuthorizationHeader(
 		accessTokenString,
 		h.settings,

@@ -9,7 +9,7 @@ services:
       - backend
     build:
       context: .
-      dockerfile: nginx/Dockerfile
+      dockerfile: Dockerfile
 
   database:
     image: postgres
@@ -25,9 +25,11 @@ services:
     volumes:
      - pg-data:/var/lib/postgresql/data
 
-  api-geteway:
+  auth-geteway:
     build:
-     context: api-gateway
+     context: auth-gateway
+    environment:
+      "env": "prod"
     depends_on:
       - database
     networks:
@@ -39,7 +41,68 @@ services:
           memory: 1024M
         reservations:
           memory: 200M   
+  
+  # auth:
+  #   build:
+  #    context: microservices/auth
+  #   depends_on:
+  #     - database
+  #   networks:
+  #     - backend
+  #   deploy:
+  #     replicas: 1
+  #     resources:
+  #       limits:
+  #         memory: 1024M
+  #       reservations:
+  #         memory: 200M   
+  
+  migration-service:
+    build:
+     context: microservices/migration-service
+    environment:
+      "env": "prod"
+    depends_on:
+      - database
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 200M   
+  
+  # register-service:
+  #   build:
+  #    context: microservices/register-service
+  #   depends_on:
+  #     - database
+  #   networks:
+  #     - backend
+  #   deploy:
+  #     replicas: 1
+  #     resources:
+  #       limits:
+  #         memory: 1024M
+  #       reservations:
+  #         memory: 200M   
 
+  # user-service:
+  #   build:
+  #    context: microservices/user-service
+  #   depends_on:
+  #     - database
+  #   networks:
+  #     - backend
+  #   deploy:
+  #     replicas: 1
+  #     resources:
+  #       limits:
+  #         memory: 1024M
+  #       reservations:
+  #         memory: 200M  
 networks:
   backend:
 
