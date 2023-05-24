@@ -11,7 +11,7 @@ services:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - auth-geteway
+      - auth-gateway
 
   database:
     image: postgres
@@ -27,7 +27,7 @@ services:
     volumes:
      - pg-data:/var/lib/postgresql/data
 
-  auth-geteway:
+  auth-gateway:
     build:
      context: auth-gateway
     environment:
