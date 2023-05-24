@@ -3,13 +3,15 @@ services:
 
   nginx:
     ports:
-    - '8080:80'
+    - "8080:80"
     restart: always
     networks:
       - backend
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - auth-geteway
 
   database:
     image: postgres
