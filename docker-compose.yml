@@ -107,6 +107,7 @@ services:
   #         memory: 200M  
 networks:
   backend:
+   driver: bridge
 
 volumes:
   pg-data:
