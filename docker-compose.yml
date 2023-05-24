@@ -24,7 +24,7 @@ services:
     networks:
       - backend
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
      - pg-data:/var/lib/postgresql/data
     extra_hosts:
