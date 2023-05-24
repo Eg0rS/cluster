@@ -27,6 +27,8 @@ services:
       - 5432:5432
     volumes:
      - pg-data:/var/lib/postgresql/data
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
 
   auth-gateway:
     build:
