@@ -1,3 +1,4 @@
+-- +goose Up
 CREATE TABLE IF NOT EXISTS refresh_tokens
 (
     id         serial primary key NOT NULL,
