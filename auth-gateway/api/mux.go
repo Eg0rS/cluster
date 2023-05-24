@@ -9,5 +9,6 @@ func NewMux(rootHandler *root.Handler) *http.ServeMux {
 
 	mux := http.NewServeMux()
 	mux.Handle("/", rootHandler)
+	mux.Handle("/ping", root.Ping())
 	return mux
 }
