@@ -1,7 +1,6 @@
 package dal
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 )
@@ -18,10 +17,10 @@ func (r *DbRefreshTokenRepository) Save(token *RefreshToken) error {
 	var resErr error
 	_, resErr = r.db.Query(`
 			INSERT INTO refresh_tokens (user_id, access_token, refresh_token)
-			VALUES (@USERID, @ACCESSTOKEN, @REFRSHTOKEN)`,
-		sql.Named("USERID", token.UserId),
-		sql.Named("ACCESSTOKEN", token.AccessToken),
-		sql.Named("REFRSHTOKEN", token.RefreshToken),
+			VALUES ($1, $2, $3)`,
+		token.UserId,
+		token.AccessToken,
+		token.RefreshToken,
 	)
 	return resErr
 }
@@ -29,10 +28,10 @@ func (r *DbRefreshTokenRepository) Save(token *RefreshToken) error {
 func (r *DbRefreshTokenRepository) Get(token string, userId int) (result *RefreshToken, err error) {
 	rows, _ := r.db.Query(`
 			select * from refresh_tokens as rt
-				where rt.refresh_token = @TOKEN and rt.user_id = @USERID
+				where rt.refresh_token = $1 and rt.user_id = $2
 		`,
-		sql.Named("TOKEN", token),
-		sql.Named("USERID", userId),
+		token,
+		userId,
 	)
 	defer rows.Close()
 
@@ -49,9 +48,9 @@ func (r *DbRefreshTokenRepository) Get(token string, userId int) (result *Refres
 func (r *DbRefreshTokenRepository) TokenExists(token string) (b2 bool) {
 	rows, _ := r.db.Query(`
 			select * from refresh_tokens as rt
-				where rt.refresh_token = @TOKEN
+				where rt.refresh_token = $1
 		`,
-		sql.Named("TOKEN", token),
+		token,
 	)
 	if rows == nil {
 		return true
@@ -63,9 +62,9 @@ func (r *DbRefreshTokenRepository) TokenExists(token string) (b2 bool) {
 func (r *DbRefreshTokenRepository) AccessTokenExists(token string) (b2 bool) {
 	rows, _ := r.db.Query(`
 			select * from refresh_tokens as rt
-				where rt.access_token = @TOKEN
+				where rt.access_token = $1
 		`,
-		sql.Named("TOKEN", token),
+		token,
 	)
 	if rows == nil {
 		return true
@@ -77,9 +76,9 @@ func (r *DbRefreshTokenRepository) AccessTokenExists(token string) (b2 bool) {
 func (r *DbRefreshTokenRepository) DeleteByUserId(userId string) (err error) {
 	_, err = r.db.Query(`
 			Delete from refresh_tokens as rt
-				where rt.user_id = @USERID
+				where rt.user_id =$1
 		`,
-		sql.Named("USERID", userId),
+		userId,
 	)
 
 	return err
