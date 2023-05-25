@@ -12,6 +12,13 @@ type DisableLoginRequest struct {
 	UserId string
 }
 
+// DisableLoginHandler
+// @Description to_register user
+// @Tags			auth
+// @Accept			json
+// @Produce		json
+// @Param			request body DisableLoginRequest true "query params"
+// @Router			/token/disable-login/ [post]
 func DisableLoginHandler(refreshTokenRepository dal.RefreshTokenRepository) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		req := DisableLoginRequest{}

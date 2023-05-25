@@ -13,6 +13,14 @@ import (
 	"time"
 )
 
+// Register
+// @Description to_register user
+// @Tags			auth
+// @Accept			json
+// @Produce		json
+// @Param			request body dal.User true "query params"
+// @Success		200	{object}	dal.OkRegisterResponse
+// @Router			/register [post]
 func Register(repository dal.UserRepository) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		reqModel := dal.User{}

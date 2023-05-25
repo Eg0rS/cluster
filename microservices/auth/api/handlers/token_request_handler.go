@@ -25,6 +25,14 @@ type TokenRequestHandler struct {
 	refresher                   *authentication.Refresher
 }
 
+// HandleTokenRequest
+// @Description to_auth user
+// @Tags			auth
+// @Accept			json
+// @Produce		json
+// @Param			request body TokenRequest true "query params"
+// @Success		200	{object}	TokenResponse
+// @Router			/token [post]
 func (h *TokenRequestHandler) HandleTokenRequest(request *http.Request) (interface{}, error) {
 	requestData, err := h.parseRequestData(request)
 	if err != nil {

@@ -24,3 +24,16 @@ type RefreshToken struct {
 	EventDate    time.Time
 	AccessToken  string
 }
+
+var BadResponse = "Bad Request"
+var OkResponse = "Okay"
+
+type OkRegisterResponse struct {
+	AccessToken  TokenResponse `json:"AccessToken"`
+	RefreshToken TokenResponse `json:"RefreshToken"`
+}
+
+type TokenResponse struct {
+	Token string `json:"Token"`
+	TTL   int    `json:"TTL"`
+}

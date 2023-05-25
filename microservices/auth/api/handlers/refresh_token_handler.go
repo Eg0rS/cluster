@@ -11,6 +11,13 @@ type RefreshTokenHandler struct {
 	RefreshToken dal.RefreshTokenRepository
 }
 
+// DeleteByUserId
+// @Description delete refresh token by user id user
+// @Tags			auth
+// @Accept			json
+// @Produce		json
+// @Param			user_id   path      int  true  "User ID"
+// @Router			/token/{userId} [delete]
 func (h *RefreshTokenHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	userId, ok := mux.Vars(r)["userId"]
 

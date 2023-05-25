@@ -5,6 +5,8 @@ import (
 	"auth/dal"
 	"github.com/gorilla/mux"
 	"net/http"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func NewMux(
@@ -21,6 +23,8 @@ func NewMux(
 	router.Handle("/token-exist/", handlers.IsAvailableToken(refreshTokenRepository)).Methods(http.MethodPost)
 	router.Handle("/token/disable-login/", handlers.DisableLoginHandler(refreshTokenRepository)).Methods(http.MethodPost)
 	router.Handle("/logout/", handlers.LogoutHandler(refreshTokenRepository)).Methods(http.MethodPost)
+
+	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
 	return router
 }

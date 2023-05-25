@@ -1,0 +1,197 @@
+definitions:
+  dal.OkRegisterResponse:
+    properties:
+      AccessToken:
+        $ref: '#/definitions/dal.TokenResponse'
+      RefreshToken:
+        $ref: '#/definitions/dal.TokenResponse'
+    type: object
+  dal.TokenResponse:
+    properties:
+      TTL:
+        type: integer
+      Token:
+        type: string
+    type: object
+  dal.User:
+    properties:
+      age:
+        type: integer
+      city:
+        type: string
+      direction:
+        type: string
+      education:
+        type: string
+      email:
+        type: string
+      eventDate:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      passwordHash:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+      university:
+        type: string
+    type: object
+  handlers.CheckTokenRequest:
+    properties:
+      token:
+        type: string
+    type: object
+  handlers.CheckTokenResponse:
+    properties:
+      exists:
+        type: boolean
+    type: object
+  handlers.DisableLoginRequest:
+    properties:
+      userId:
+        type: string
+    type: object
+  handlers.GrantType:
+    enum:
+    - password
+    - refresh_token
+    type: string
+    x-enum-varnames:
+    - PasswordGrantType
+    - RefreshTokenGrantType
+  handlers.TokenRequest:
+    properties:
+      email:
+        type: string
+      grant_type:
+        $ref: '#/definitions/handlers.GrantType'
+      password:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  handlers.TokenResponse:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: integer
+      refresh_token:
+        type: string
+      token_type:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /logout/:
+    post:
+      consumes:
+      - application/json
+      description: to_register user
+      produces:
+      - application/json
+      responses: {}
+      tags:
+      - auth
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: to_register user
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dal.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dal.OkRegisterResponse'
+      tags:
+      - auth
+  /token:
+    post:
+      consumes:
+      - application/json
+      description: to_auth user
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.TokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.TokenResponse'
+      tags:
+      - auth
+  /token-exist/:
+    post:
+      consumes:
+      - application/json
+      description: to_auth user
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CheckTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.CheckTokenResponse'
+      tags:
+      - auth
+  /token/{userId}:
+    delete:
+      consumes:
+      - application/json
+      description: delete refresh token by user id user
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      tags:
+      - auth
+  /token/disable-login/:
+    post:
+      consumes:
+      - application/json
+      description: to_register user
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.DisableLoginRequest'
+      produces:
+      - application/json
+      responses: {}
+      tags:
+      - auth
+swagger: "2.0"

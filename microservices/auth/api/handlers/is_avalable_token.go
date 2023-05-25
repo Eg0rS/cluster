@@ -17,6 +17,14 @@ type CheckTokenResponse struct {
 	Exists bool `json:"exists"`
 }
 
+// IsAvailableToken
+// @Description to_auth user
+// @Tags			auth
+// @Accept			json
+// @Produce		json
+// @Param			request body CheckTokenRequest true "query params"
+// @Success		200	{object}	CheckTokenResponse
+// @Router			/token-exist/ [post]
 func IsAvailableToken(refreshTokenRepository dal.RefreshTokenRepository) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		reqModel := CheckTokenRequest{}
