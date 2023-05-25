@@ -1,3 +1,4 @@
+basePath: /
 definitions:
   dal.OkRegisterResponse:
     properties:
@@ -85,8 +86,12 @@ definitions:
       token_type:
         type: string
     type: object
+host: localhost:80
 info:
   contact: {}
+  description: This is a sample server celler server.
+  title: Swagger of API
+  version: "1.0"
 paths:
   /logout/:
     post:
