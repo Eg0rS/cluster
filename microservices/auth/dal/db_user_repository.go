@@ -85,15 +85,12 @@ func (r *DbUserRepository) GetByUserName(email string) (*User, error) {
 }
 
 func (r *DbUserRepository) Create(user *User) error {
-	_, err := r.db.Exec(`
-			insert into users
-				(email, password_hash, event_date, surname, name, patronymic, city, university, age, education, direction)
+	_, err := r.db.Query(`insert into users
+				(email, password_hash,  surname, first_name, patronymic, city, university, age, education, direction_internship)
 			values
-				(@EMAIL, @PASSWORD_HASH, @EVENT_DATE, @SURNAME, @NAME, @PATRONYMIC, @CITY, @UNIVERSITY, @AGE, @EDUCATION, @DIRECTION)
-		`,
+				(@EMAIL, @PASSWORD_HASH,  @SURNAME, @NAME, @PATRONYMIC, @CITY, @UNIVERSITY, @AGE, @EDUCATION, @DIRECTION)`,
 		sql.Named("EMAIL", user.Email),
 		sql.Named("PASSWORD_HASH", user.PasswordHash),
-		sql.Named("EVENT_DATE", user.EventDate),
 		sql.Named("SURNAME", user.Surname),
 		sql.Named("NAME", user.Name),
 		sql.Named("PATRONYMIC", user.Patronymic),
