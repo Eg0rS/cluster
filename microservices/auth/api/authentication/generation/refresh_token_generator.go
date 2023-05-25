@@ -15,8 +15,8 @@ type RefreshTokenGenerator struct {
 	settings *config.Settings
 }
 
-func (g *RefreshTokenGenerator) Generate(userId string, userAgent string, isSuperUser bool) string {
-	content := g.getContent(userId, userAgent, isSuperUser)
+func (g *RefreshTokenGenerator) Generate(userId int, isSuperUser bool) string {
+	content := g.getContent(userId, isSuperUser)
 	token, err := cipher.Encrypt([]byte(g.settings.RefreshTokenSecret), content)
 	if err != nil {
 		panic(err) // TODO don't fail
@@ -24,10 +24,9 @@ func (g *RefreshTokenGenerator) Generate(userId string, userAgent string, isSupe
 	return token
 }
 
-func (g *RefreshTokenGenerator) getContent(userId string, userAgent string, isSuperUser bool) []byte {
+func (g *RefreshTokenGenerator) getContent(userId int, isSuperUser bool) []byte {
 	claims := RefreshTokenClaims{
 		UserId:            userId,
-		UserAgent:         userAgent,
 		TTL:               g.settings.RefreshTokenTTL,
 		CreationTimestamp: time.Now().UTC().Unix(),
 		US:                isSuperUser,

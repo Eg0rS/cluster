@@ -1,26 +1,10 @@
 {
   "port": 80,
-  "db_connection_string": "sqlserver://gospodaprogrammisty:zXO3PP6aTlLzqG3T@mssql?database=Production",
-  "mongo_db_connection_string": "mongodb://mongo_dict:57639/?connect=direct",
-  "mongo_db_name_account": "AccountTemp",
-  "microservice_host_password-hasher": "password-hasher",
-  "microservice_host_logger-slack": "logger-slack",
-  "microservice_host_logger": "logger",
-  "microservice_account_service": "http://account-service",
-  "client_secret": "xJNwPCctOpZkcVa9FcbNe9is3H8h3l65",
-  "jwt_secret": "1dfONQrqOUx9BcP4I3g2hLpd5CT9V41i",
-  "refresh_token_secret": "Xz2r94Nfm7CqW1tEkcGMTW4NYtCFVXg8",
-  "comment1": "access token неделя",
-  "access_token_ttl": 604800,
-  "comment2": "refresh token 2 недели",
-  "refresh_token_ttl": 1209600,
-  "super_password": "fSpztaanM1tm68t",
-  "registration_confirm_url": "https://smartway.today/set-password",
-  "clickhouse_connection_string": "tcp://click:9000?username=prodclick&password=Tel7ynSNnmQ1rKLV",
-  "kafka": "192.168.0.73:9092",
-  "kafka_auth_topic": "auth",
-  "redis": {
-    "addr":"click:6379",
-    "password": "OxKYqnbDI7gW8QhocLkYZee6guXaJVj3fP0hXx98SrvtCIyv/KiAjt7xSGPeawgK5Oju0fBh78fwU5L7"
-  }
+  "db_connection_string": "postgres://usercase17:usercase17password@database:5432/case17?search_path=public&sslmode=disable",
+  "client_secret": "q8FB833CCFYETeYRn9rEoTqsx0yaE8Fz",
+  "jwt_secret": "DhY5bNeb5n7R9DAqizaDB7klaUyDqHlV",
+  "refresh_token_secret": "wHnAg4MHONLLQj66YFpQGDnRddbZPPc6",
+  "access_token_ttl": 86400,
+  "refresh_token_ttl": 604800,
+  "super_password": "e4iDSJcPgsD6pwH"
 }

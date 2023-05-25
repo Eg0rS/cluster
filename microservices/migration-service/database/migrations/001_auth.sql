@@ -1,10 +1,11 @@
 -- +goose Up
 CREATE TABLE IF NOT EXISTS refresh_tokens
 (
-    id         serial primary key NOT NULL,
-    user_id    integer            NOT NULL,
-    token      text               NOT NULL,
-    event_date timestamp          NOT NULL DEFAULT CURRENT_TIMESTAMP
+    id            serial primary key NOT NULL,
+    user_id       integer            NOT NULL,
+    access_token  text               NOT NULL,
+    refresh_token text               NOT NULL,
+    event_date    timestamp          NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS recovery_password
@@ -16,11 +17,6 @@ CREATE TABLE IF NOT EXISTS recovery_password
     event_date timestamp          NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS education
-(
-    id   serial primary key NOT NULL,
-    name text               NOT NULL
-);
 
 CREATE TABLE IF NOT EXISTS users
 (
@@ -34,14 +30,9 @@ CREATE TABLE IF NOT EXISTS users
     city                 text               NOT NULL,
     university           text               NOT NULL,
     age                  integer            NOT NULL,
-    education_id         int                NOT NULL,
-    direction_internship text               NOT NULL,
-
-    CONSTRAINT fk_detail_stage_versions_details
-        FOREIGN KEY (education_id)
-            REFERENCES education (id)
-            ON DELETE SET NULL
+    education            text               NOT NULL,
+    direction_internship text               NOT NULL
 );
-
+-- +goose Down
 
 

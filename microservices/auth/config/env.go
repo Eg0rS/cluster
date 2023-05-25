@@ -1,6 +1,6 @@
 package config
 
-const ServiceEnvVarName = "SW_ENV"
+const ServiceEnvVarName = "env"
 
 const (
 	EnvProd  = Env("prod")

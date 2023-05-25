@@ -3,9 +3,8 @@ package handlers
 import (
 	"auth/dal"
 	"auth/utils/httpUtils"
-	"net/http"
-
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 type RefreshTokenHandler struct {

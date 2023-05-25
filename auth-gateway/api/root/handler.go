@@ -42,7 +42,6 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	accessToken, err = authHeader.GetToken()
 	if err != nil {
-		// капец конечно костыли :-(
 		accessToken = &authorization.JWT{}
 	}
 
@@ -50,6 +49,17 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	n := strings.Index(serviceName, "/")
 	if n != -1 {
 		serviceName = serviceName[:n]
+	}
+	if accessToken.GetPayload() != "" {
+		if !accessToken.IsValid() || isPrivateRoute(r.URL.Path, serviceName) {
+			httpUtils.Unauthorized(w)
+			return
+		}
+
+		if h.authService.IsAccessTokenExists(accessTokenString) {
+			httpUtils.Unauthorized(w)
+			return
+		}
 	}
 
 	payload := accessToken.GetPayload()
@@ -84,5 +94,5 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func isPrivateRoute(path, serviceName string) bool {
-	return strings.HasPrefix(path, fmt.Sprintf("/%s/private", serviceName))
+	return strings.HasPrefix(path, fmt.Sprintf("/%s/swagger", serviceName))
 }

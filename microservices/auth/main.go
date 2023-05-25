@@ -15,39 +15,19 @@ func main() {
 
 	mainCtx := context.Background()
 
-	batchSize := 100
-
 	done := make(chan struct{})
-	dbConnector := dbUtils.NewDBConnector(settings.DbConnectionString)
-	if err := dbConnector.Open(); err != nil {
-		panic(err)
-	}
-	db, err := dbConnector.GetDB()
+	db, err := dbUtils.NewPostgres(settings.DbConnectionString)
 	if err != nil {
 		panic(err)
 	}
-	clickConnect, err := clickhouse.ConfigureClickHouseConn(settings.ClickHouseRepository)
-	if err != nil {
-		log.Fatalln("Нет подключения к ClickHouse")
-	}
-	clickRepository := clickhouse.NewDBRepository(clickConnect)
 
 	server := serviceProvider{
 		settings:               settings,
 		done:                   done,
 		userRepository:         dal.NewDbUserRepository(db),
-		userRoleRepository:     dal.NewDbUserRoleRepository(db),
-		refreshTokenRepository: dal.NewDbRefreshTokenRepository(settings),
-		passwordHasher:         passwordHasher.New(settings),
-		loggerSlack:            loggerSlack.New(settings),
-		availableUsersRepo:     dal.NewDbAvailableUsers(settings),
-		uuidRepository:         dal.NewDbUUIDRepository(settings),
-		clickRepository:        clickRepository,
-		loggerService:          logger.New(settings),
+		refreshTokenRepository: dal.NewDbRefreshTokenRepository(db),
 		mainCtx:                mainCtx,
-		authLog:                authLog,
 	}.provide()
 	server.Start()
 	<-done
-	dbConnector.Close()
 }

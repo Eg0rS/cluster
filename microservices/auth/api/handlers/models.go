@@ -1,29 +1,10 @@
 package handlers
 
 type TokenRequest struct {
-	GrantType       GrantType `json:"grant_type"`
-	ClientId        int       `json:"client_id"`
-	ClientSecret    string    `json:"client_secret"`
-	UserName        string    `json:"username"`
-	Password        string    `json:"password"`
-	RefreshToken    string    `json:"refresh_token"`
-	Source          Source    `json:"source"`
-	Uuid            string    `json:"uuid"`
-	ClientIP        string
-	ClientUserAgent string
-	Origin          string
-}
-
-type Source string
-
-const (
-	SourceMobile   Source = "mobile-api"
-	SourceExternal Source = "external-api"
-	SourceOther    Source = ""
-)
-
-func (s Source) IsMobile() bool {
-	return s == SourceMobile
+	GrantType    GrantType `json:"grant_type"`
+	UserName     string    `json:"email"`
+	Password     string    `json:"password"`
+	RefreshToken string    `json:"refresh_token"`
 }
 
 type TokenResponse struct {
@@ -35,9 +16,7 @@ type TokenResponse struct {
 
 const (
 	PasswordGrantType     = GrantType("password")
-	PasswordHashGrantType = GrantType("password_hash") // TODO It's temporary grant type
 	RefreshTokenGrantType = GrantType("refresh_token")
-	UuidGrantType         = GrantType("uuid")
 )
 
 type GrantType string

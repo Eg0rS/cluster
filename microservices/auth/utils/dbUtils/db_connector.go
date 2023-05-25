@@ -3,8 +3,6 @@ package dbUtils
 import (
 	"database/sql"
 	"fmt"
-
-	_ "github.com/denisenkom/go-mssqldb"
 )
 
 func NewDBConnector(connectionString string) *DBConnector {

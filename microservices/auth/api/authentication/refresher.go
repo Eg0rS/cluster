@@ -36,28 +36,11 @@ type Refresher struct {
 }
 
 func (r *Refresher) RefreshAccess(request *RefreshRequest) (*Access, error) {
-	if len(request.UserAgent) <= 0 {
-		return nil, EmptyUserAgentError
-	}
-
-	if request.Client.Id <= 0 {
-		return nil, UnrecognizedClientError
-	}
-
-	if request.Client.Secret != r.settings.ClientSecret {
-		return nil, UnrecognizedClientError
-	}
 
 	claims, err := r.tokenParser.Parse(request.RefreshToken)
 	if err != nil {
 		return nil, InvalidTokenError
 	}
-
-	//if claims.UserAgent != request.UserAgent {
-	//	log.Println("claims.UserAgent " + claims.UserAgent + "  request.UserAgent " + request.UserAgent)
-	//	log.Println(UnrecognizedClientError)
-	//	return nil, UnrecognizedClientError
-	//}
 
 	if claims.IsExpired() {
 		return nil, InvalidTokenError
@@ -75,19 +58,17 @@ func (r *Refresher) RefreshAccess(request *RefreshRequest) (*Access, error) {
 		return nil, InvalidTokenError
 	}
 
-	accessToken, err := r.accessTokenGenerator.Generate(user, request.UserAgent, request.Origin, claims.US)
+	accessToken, err := r.accessTokenGenerator.Generate(user, claims.US)
 	if err != nil {
 		return nil, err
 	}
-	refreshToken := r.refreshTokenGenerator.Generate(user.UserId, request.UserAgent, claims.US)
+	refreshToken := r.refreshTokenGenerator.Generate(user.Id, claims.US)
 
 	err = r.refreshTokenRepository.Save(&dal.RefreshToken{
-		UserId:       user.UserId,
-		Token:        refreshToken,
-		CreationDate: time.Now(),
+		UserId:       user.Id,
+		RefreshToken: refreshToken,
+		EventDate:    time.Now(),
 		AccessToken:  accessToken,
-		UserAgent:    request.UserAgent,
-		IP:           request.ClientIP,
 	})
 	if err != nil {
 		return nil, err

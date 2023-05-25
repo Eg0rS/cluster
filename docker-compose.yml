@@ -47,20 +47,22 @@ services:
         reservations:
           memory: 200M   
   
-  # auth:
-  #   build:
-  #    context: microservices/auth
-  #   depends_on:
-  #     - database
-  #   networks:
-  #     - backend
-  #   deploy:
-  #     replicas: 1
-  #     resources:
-  #       limits:
-  #         memory: 1024M
-  #       reservations:
-  #         memory: 200M   
+  auth:
+    build:
+     context: microservices/auth
+    depends_on:
+      - database
+    networks:
+      - backend
+    environment:
+      "env": "prod"
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 200M   
   
   migration-service:
     build:

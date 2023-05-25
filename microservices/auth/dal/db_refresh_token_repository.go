@@ -1,106 +1,86 @@
 package dal
 
 import (
-	"auth/config"
+	"database/sql"
 	"fmt"
-
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
+	"github.com/jmoiron/sqlx"
 )
 
-func NewDbRefreshTokenRepository(settings *config.Settings) RefreshTokenRepository {
-	return &DbRefreshTokenRepository{settings}
+func NewDbRefreshTokenRepository(db *sqlx.DB) RefreshTokenRepository {
+	return &DbRefreshTokenRepository{db}
 }
 
 type DbRefreshTokenRepository struct {
-	settings *config.Settings
+	db *sqlx.DB
 }
 
 func (r *DbRefreshTokenRepository) Save(token *RefreshToken) error {
 	var resErr error
-	resErr = r.mongoSession(func(session *mgo.Session) error {
-		collection := session.DB(r.settings.MongoDbNameAccount).C("RefreshTokens")
-		if err := collection.Insert(token); err != nil {
-			return fmt.Errorf("save refresh token error: %s", err.Error())
-		}
-		return nil
-	})
+	_, resErr = r.db.Query(`
+			INSERT INTO refresh_tokens (user_id, access_token, refresh_token)
+			VALUES (@USERID, @ACCESSTOKEN, @REFRSHTOKEN)`,
+		sql.Named("USERID", token.UserId),
+		sql.Named("ACCESSTOKEN", token.AccessToken),
+		sql.Named("REFRSHTOKEN", token.RefreshToken),
+	)
 	return resErr
 }
 
-func (r *DbRefreshTokenRepository) Get(token string, userId string) (result *RefreshToken, err error) {
-	err = r.mongoSession(func(session *mgo.Session) error {
-		collection := session.DB(r.settings.MongoDbNameAccount).C("RefreshTokens")
-		return collection.Find(bson.M{"token": token, "user_id": userId}).One(&result)
-	})
+func (r *DbRefreshTokenRepository) Get(token string, userId int) (result *RefreshToken, err error) {
+	rows, _ := r.db.Query(`
+			select * from refresh_tokens as rt
+				where rt.refresh_token = @TOKEN and rt.user_id = @USERID
+		`,
+		sql.Named("TOKEN", token),
+		sql.Named("USERID", userId),
+	)
+	defer rows.Close()
+
+	if rows.Next() {
+		err = rows.Scan(&result.Id, &result.UserId, &result.AccessToken, &result.RefreshToken, &result.EventDate)
+		if err != nil {
+			return nil, fmt.Errorf("failed select from dbo.AspNetUsers: %s", err.Error())
+		}
+	}
+
 	return
 }
 
 func (r *DbRefreshTokenRepository) TokenExists(token string) (b2 bool) {
-	count := 0
-	err := r.mongoSession(func(session *mgo.Session) error {
-		collection := session.DB(r.settings.MongoDbNameAccount).C("RefreshTokens")
-		var err error
-		count, err = collection.Find(bson.M{"token": token}).Count()
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-	if err != nil {
-		return false
+	rows, _ := r.db.Query(`
+			select * from refresh_tokens as rt
+				where rt.refresh_token = @TOKEN
+		`,
+		sql.Named("TOKEN", token),
+	)
+	if rows == nil {
+		return true
 	}
-	return count == 0
+	defer rows.Close()
+	return false
 }
 
 func (r *DbRefreshTokenRepository) AccessTokenExists(token string) (b2 bool) {
-	count := 0
-	err := r.mongoSession(func(session *mgo.Session) error {
-		collection := session.DB(r.settings.MongoDbNameAccount).C("RefreshTokens")
-		var err error
-		count, err = collection.Find(bson.M{"access_token": token}).Count()
-		if err != nil {
-			return err
-		}
-		return nil
-	})
-	if err != nil {
-		return false
+	rows, _ := r.db.Query(`
+			select * from refresh_tokens as rt
+				where rt.access_token = @TOKEN
+		`,
+		sql.Named("TOKEN", token),
+	)
+	if rows == nil {
+		return true
 	}
-	return count == 0
-}
-
-func (r *DbRefreshTokenRepository) Delete(token string, userId string) (err error) {
-	err = r.mongoSession(func(session *mgo.Session) error {
-		collection := session.DB(r.settings.MongoDbNameAccount).C("RefreshTokens")
-		if err := collection.Remove(bson.M{"token": token, "user_id": userId}); err != nil {
-			return fmt.Errorf("delete refresh token error: %s", err.Error())
-		}
-		return nil
-	})
-	return err
+	defer rows.Close()
+	return false
 }
 
 func (r *DbRefreshTokenRepository) DeleteByUserId(userId string) (err error) {
-	err = r.mongoSession(func(session *mgo.Session) error {
-		if _, err := session.DB(r.settings.MongoDbNameAccount).C("RefreshTokens").RemoveAll(
-			bson.M{"user_id": userId}); err != nil {
-			return fmt.Errorf("delete refresh token error: %s", err.Error())
-		}
-		return nil
-	})
+	_, err = r.db.Query(`
+			Delete from refresh_tokens as rt
+				where rt.user_id = @USERID
+		`,
+		sql.Named("USERID", userId),
+	)
+
 	return err
-}
-
-func (r *DbRefreshTokenRepository) mongoSession(action func(*mgo.Session) error) error {
-	session, err := mgo.Dial(r.settings.MongoDbConnectionString)
-	if err != nil {
-		return fmt.Errorf("MongoDB session creation error: %s", err.Error())
-	}
-	defer session.Close()
-
-	if err := action(session); err != nil {
-		return err
-	}
-	return nil
 }

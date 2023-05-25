@@ -8,8 +8,6 @@ import (
 	"auth/config"
 	"auth/dal"
 	"auth/microservices"
-	"auth/microservices/accountservice"
-	"auth/tokencache"
 	"context"
 )
 
@@ -26,8 +24,6 @@ type serviceProvider struct {
 func (p serviceProvider) provide() *api.Server {
 	accessTokenGenerator := generation.NewAccessTokenGenerator(
 		p.settings,
-		generation.NewRoleChecker(p.userRoleRepository),
-		accountservice.NewService(p.settings.MicroserviceAccountService),
 	)
 	refreshTokenGenerator := generation.NewRefreshTokenGenerator(p.settings)
 	authenticator := authentication.NewAuthenticator(
@@ -37,8 +33,6 @@ func (p serviceProvider) provide() *api.Server {
 		p.refreshTokenRepository,
 		p.passwordHasher,
 		p.settings,
-		p.clickRepository,
-		p.authLog,
 	)
 	tokenRequestHandler := handlers.NewTokenRequestHandler(
 		authenticator,
@@ -57,16 +51,7 @@ func (p serviceProvider) provide() *api.Server {
 			generation.NewRefreshTokenParser(p.settings),
 			p.refreshTokenRepository,
 			p.settings),
-		authentication.NewAuthenticatorByUUID(
-			p.settings,
-			authenticator,
-			p.uuidRepository,
-			p.userRepository),
-		p.loggerSlack,
-		p.availableUsersRepo,
 	)
-
-	tokenCache := tokencache.New("", "")
 
 	return api.NewAuthServer(
 		p.settings,
@@ -74,8 +59,6 @@ func (p serviceProvider) provide() *api.Server {
 		api.NewMux(
 			tokenRequestHandler,
 			p.refreshTokenRepository,
-			p.loggerService,
-			p.mainCtx,
-			tokenCache),
+			p.userRepository),
 	)
 }

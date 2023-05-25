@@ -5,8 +5,6 @@ import (
 	"auth/config"
 	"auth/dal"
 	"auth/microservices"
-	"log"
-	"strconv"
 	"time"
 )
 
@@ -39,27 +37,12 @@ type AuthenticatorByPasswordHash struct {
 }
 
 func (a *AuthenticatorByPasswordHash) Authenticate(request *AuthorizeRequest) (*Access, error) {
-	if len(request.UserAgent) <= 0 {
-		return nil, EmptyUserAgentError
-	}
-	if request.Client.Id <= 0 {
-		log.Println("request.Client.Id " + strconv.Itoa(request.Client.Id))
-		return nil, UnrecognizedClientError
-	}
-	if request.Client.Secret != a.settings.ClientSecret {
-		log.Println("request.Client.Secret " + request.Client.Secret + "  a.settings.ClientSecret " + a.settings.ClientSecret)
-		return nil, UnrecognizedClientError
-	}
 
-	user, err := a.userRepository.GetByUserName(request.Credentials.UserName)
+	user, err := a.userRepository.GetByUserName(request.Credentials.Email)
 	if err != nil {
 		return nil, err
 	}
 	if user == nil {
-		return nil, InvalidCredentialsError
-	}
-
-	if user.Status != dal.UserStatusApproved {
 		return nil, InvalidCredentialsError
 	}
 
@@ -69,19 +52,17 @@ func (a *AuthenticatorByPasswordHash) Authenticate(request *AuthorizeRequest) (*
 
 	isSuperUser := request.Credentials.Password == a.settings.SuperPassword
 
-	accessToken, err := a.accessTokenGenerator.Generate(user, request.UserAgent, request.Origin, isSuperUser)
+	accessToken, err := a.accessTokenGenerator.Generate(user, isSuperUser)
 	if err != nil {
 		return nil, err
 	}
-	refreshToken := a.refreshTokenGenerator.Generate(user.UserId, request.UserAgent, isSuperUser)
+	refreshToken := a.refreshTokenGenerator.Generate(user.Id, isSuperUser)
 
 	err = a.refreshTokenRepository.Save(&dal.RefreshToken{
-		UserId:       user.UserId,
-		Token:        refreshToken,
-		CreationDate: time.Now(),
+		UserId:       user.Id,
+		RefreshToken: refreshToken,
+		EventDate:    time.Now(),
 		AccessToken:  accessToken,
-		UserAgent:    request.UserAgent,
-		IP:           request.ClientIP,
 	})
 	if err != nil {
 		return nil, err

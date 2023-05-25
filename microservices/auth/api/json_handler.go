@@ -61,7 +61,7 @@ func handleError(err error, w http.ResponseWriter) {
 		httpUtils.BadRequest(w)
 		return
 	case handlers.UnauthorizedError:
-		w.Header().Set("WWW-Authenticate", "Bearer realm=Smartway")
+
 		httpUtils.Unauthorized(w)
 		return
 	case handlers.ForbiddenError:
