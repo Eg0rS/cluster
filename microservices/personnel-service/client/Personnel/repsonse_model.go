@@ -1,6 +1,6 @@
 package personnel
 
-import "hack_ldt/database/pesrsonnel_repo"
+import "personnel_service/database/pesrsonnel_repo"
 
 type CreateTestResponse struct {
 	Id    int    `json:"id"`
