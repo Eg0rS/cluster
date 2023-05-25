@@ -25,24 +25,24 @@ func (r *DbRefreshTokenRepository) Save(token *RefreshToken) error {
 	return resErr
 }
 
-func (r *DbRefreshTokenRepository) Get(token string, userId int) (result *RefreshToken, err error) {
+func (r *DbRefreshTokenRepository) Get(token string, userId int) (*RefreshToken, error) {
 	rows, _ := r.db.Query(`
-			select * from refresh_tokens as rt
+			select id, user_id, access_token, refresh_token, event_date from refresh_tokens as rt
 				where rt.refresh_token = $1 and rt.user_id = $2
 		`,
 		token,
 		userId,
 	)
-	defer rows.Close()
-
+	result := RefreshToken{}
 	if rows.Next() {
-		err = rows.Scan(&result.Id, &result.UserId, &result.AccessToken, &result.RefreshToken, &result.EventDate)
+		err := rows.Scan(&result.Id, &result.UserId, &result.AccessToken, &result.RefreshToken, &result.EventDate)
 		if err != nil {
 			return nil, fmt.Errorf("failed select from dbo.AspNetUsers: %s", err.Error())
 		}
 	}
+	defer rows.Close()
 
-	return
+	return &result, nil
 }
 
 func (r *DbRefreshTokenRepository) TokenExists(token string) (b2 bool) {
@@ -52,7 +52,7 @@ func (r *DbRefreshTokenRepository) TokenExists(token string) (b2 bool) {
 		`,
 		token,
 	)
-	if rows == nil {
+	if rows != nil {
 		return true
 	}
 	defer rows.Close()
@@ -66,7 +66,7 @@ func (r *DbRefreshTokenRepository) AccessTokenExists(token string) (b2 bool) {
 		`,
 		token,
 	)
-	if rows == nil {
+	if rows != nil {
 		return true
 	}
 	defer rows.Close()
