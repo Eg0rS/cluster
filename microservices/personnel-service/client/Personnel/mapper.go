@@ -1,6 +1,6 @@
 package personnel
 
-import "hack_ldt/model"
+import "personnel_service/model"
 
 func MapRequestRadioTestModelToServiceModel(testModel RadioTest) model.RadioTest {
 	var questions []model.Question
