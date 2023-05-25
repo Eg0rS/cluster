@@ -2,7 +2,6 @@ package dal
 
 import (
 	"auth/utils/dbUtils"
-	"database/sql"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 )
@@ -19,9 +18,9 @@ func (r *DbUserRepository) GetById(userId int) (*User, error) {
 	user := &User{}
 	rows, err := r.db.Query(`
 			select top 1 * from users as u
-				where u.id = @USER_ID
+				where u.id = $1
 		`,
-		sql.Named("USER_ID", userId),
+		userId,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed select from dbo.AspNetUsers: %s", err.Error())
@@ -52,11 +51,11 @@ func (r *DbUserRepository) GetById(userId int) (*User, error) {
 func (r *DbUserRepository) GetByUserName(email string) (*User, error) {
 	user := &User{}
 	rows, err := r.db.Query(`
-			select top 1
+			select 
 					 * from users as u
-				where u.email = @USER_NAME
+				where u.email = $1
 		`,
-		sql.Named("USER_NAME", email),
+		email,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("failed select from dbo.AspNetUsers: %s", err.Error())
@@ -85,20 +84,19 @@ func (r *DbUserRepository) GetByUserName(email string) (*User, error) {
 }
 
 func (r *DbUserRepository) Create(user *User) error {
-	_, err := r.db.Query(`insert into users
-				(email, password_hash,  surname, first_name, patronymic, city, university, age, education, direction_internship)
-			values
-				(@EMAIL, @PASSWORD_HASH,  @SURNAME, @NAME, @PATRONYMIC, @CITY, @UNIVERSITY, @AGE, @EDUCATION, @DIRECTION)`,
-		sql.Named("EMAIL", user.Email),
-		sql.Named("PASSWORD_HASH", user.PasswordHash),
-		sql.Named("SURNAME", user.Surname),
-		sql.Named("NAME", user.Name),
-		sql.Named("PATRONYMIC", user.Patronymic),
-		sql.Named("CITY", user.City),
-		sql.Named("UNIVERSITY", user.University),
-		sql.Named("AGE", user.Age),
-		sql.Named("EDUCATION", user.Education),
-		sql.Named("DIRECTION", user.Direction),
+	_, err := r.db.Query(`insert into users (email, password_hash, surname, first_name, patronymic, city, university, age, education, direction_internship)
+values
+				($1, $2,  $3, $4, $5, $6, $7, $8, $9, $10)`,
+		user.Email,
+		user.PasswordHash,
+		user.Surname,
+		user.Name,
+		user.Patronymic,
+		user.City,
+		user.University,
+		user.Age,
+		user.Education,
+		user.Direction,
 	)
 	if err != nil {
 		return fmt.Errorf("failed insert into dbo.AspNetUsers: %s", err.Error())
