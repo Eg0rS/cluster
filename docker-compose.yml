@@ -80,7 +80,24 @@ services:
           memory: 1024M
         reservations:
           memory: 200M   
-  
+
+  personnel-service:
+    build:
+      context: microservices/personnel-service
+    environment:
+      "env": "prod"
+    depends_on:
+      - database
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 200M
+
   # register-service:
   #   build:
   #    context: microservices/register-service
