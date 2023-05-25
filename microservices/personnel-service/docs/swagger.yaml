@@ -1,0 +1,275 @@
+basePath: /
+definitions:
+  personnel.Answer:
+    properties:
+      is_right:
+        type: boolean
+      text:
+        type: string
+    type: object
+  personnel.CreateRequestResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  personnel.Question:
+    properties:
+      answers:
+        items:
+          $ref: '#/definitions/personnel.Answer'
+        type: array
+      title:
+        type: string
+    type: object
+  personnel.RadioTest:
+    properties:
+      description:
+        type: string
+      questions:
+        items:
+          $ref: '#/definitions/personnel.Question'
+        type: array
+      title:
+        type: string
+    type: object
+  personnel.Request:
+    properties:
+      description:
+        type: string
+      test_id:
+        type: integer
+      title:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  swagger_responses.CreateRequestOkRes:
+    properties:
+      error:
+        example: ""
+        type: string
+    type: object
+  swagger_responses.CreateTestOkRes:
+    properties:
+      error:
+        example: ""
+        type: string
+      id:
+        example: 1
+        type: integer
+    type: object
+  swagger_responses.GetRequestsOkRes:
+    properties:
+      error:
+        example: ""
+        type: string
+      requests:
+        items:
+          $ref: '#/definitions/swagger_responses.RequestOkRes'
+        type: array
+    type: object
+  swagger_responses.HTTPErrorCreateRequest:
+    properties:
+      error:
+        example: status bad request
+        type: string
+    type: object
+  swagger_responses.HTTPErrorCreateTest:
+    properties:
+      error:
+        example: status bad request
+        type: string
+      id:
+        example: 0
+        type: integer
+    type: object
+  swagger_responses.HTTPErrorGetRequests:
+    properties:
+      error:
+        example: status bad request
+        type: string
+      requests:
+        items:
+          type: integer
+        type: array
+    type: object
+  swagger_responses.RequestOkRes:
+    properties:
+      description:
+        example: Next.js
+        type: string
+      name:
+        example: Алексей
+        type: string
+      surname:
+        example: Тимошин
+        type: string
+      test_id:
+        example: 1
+        type: integer
+      title:
+        example: Вакансия frontend
+        type: string
+    type: object
+host: localhost:80
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  title: Swagger of API
+  version: "1.0"
+paths:
+  /personnel/get/requests/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get all requests by user id
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger_responses.GetRequestsOkRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorGetRequests'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorGetRequests'
+      tags:
+      - personnel
+  /personnel/get/test/{test_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get test by him id
+      parameters:
+      - description: Test ID
+        in: path
+        name: test_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/personnel.RadioTest'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/personnel.CreateRequestResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/personnel.CreateRequestResponse'
+      tags:
+      - personnel
+  /personnel/new/radio_test:
+    post:
+      consumes:
+      - application/json
+      description: Create radio test and return test id
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/personnel.RadioTest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger_responses.CreateTestOkRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateTest'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateTest'
+      tags:
+      - personnel
+  /personnel/new/request:
+    post:
+      consumes:
+      - application/json
+      description: Create request
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/personnel.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger_responses.CreateRequestOkRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateRequest'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateRequest'
+      tags:
+      - personnel
+  /personnel/new/text_test:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create text test and return test id
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: title
+        in: formData
+        name: title
+        required: true
+        type: string
+      - description: description
+        in: formData
+        name: description
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger_responses.CreateTestOkRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateTest'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateTest'
+      tags:
+      - personnel
+  /ping:
+    get:
+      description: ping-pong ops...
+      responses: {}
+swagger: "2.0"

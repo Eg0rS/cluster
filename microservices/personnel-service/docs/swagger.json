@@ -1,0 +1,418 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server celler server.",
+        "title": "Swagger of API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:80",
+    "basePath": "/",
+    "paths": {
+        "/personnel/get/requests/{user_id}": {
+            "get": {
+                "description": "Get all requests by user id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "personnel"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.GetRequestsOkRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorGetRequests"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorGetRequests"
+                        }
+                    }
+                }
+            }
+        },
+        "/personnel/get/test/{test_id}": {
+            "get": {
+                "description": "Get test by him id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "personnel"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Test ID",
+                        "name": "test_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/personnel.RadioTest"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/personnel.CreateRequestResponse"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/personnel.CreateRequestResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/personnel/new/radio_test": {
+            "post": {
+                "description": "Create radio test and return test id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "personnel"
+                ],
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/personnel.RadioTest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.CreateTestOkRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateTest"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateTest"
+                        }
+                    }
+                }
+            }
+        },
+        "/personnel/new/request": {
+            "post": {
+                "description": "Create request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "personnel"
+                ],
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/personnel.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.CreateRequestOkRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateRequest"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateRequest"
+                        }
+                    }
+                }
+            }
+        },
+        "/personnel/new/text_test": {
+            "post": {
+                "description": "Create text test and return test id",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "personnel"
+                ],
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "title",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "description",
+                        "name": "description",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.CreateTestOkRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateTest"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateTest"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "ping-pong ops...",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "personnel.Answer": {
+            "type": "object",
+            "properties": {
+                "is_right": {
+                    "type": "boolean"
+                },
+                "text": {
+                    "type": "string"
+                }
+            }
+        },
+        "personnel.CreateRequestResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "personnel.Question": {
+            "type": "object",
+            "properties": {
+                "answers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/personnel.Answer"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "personnel.RadioTest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "questions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/personnel.Question"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "personnel.Request": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "test_id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "swagger_responses.CreateRequestOkRes": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": ""
+                }
+            }
+        },
+        "swagger_responses.CreateTestOkRes": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": ""
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "swagger_responses.GetRequestsOkRes": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": ""
+                },
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/swagger_responses.RequestOkRes"
+                    }
+                }
+            }
+        },
+        "swagger_responses.HTTPErrorCreateRequest": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "status bad request"
+                }
+            }
+        },
+        "swagger_responses.HTTPErrorCreateTest": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "status bad request"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 0
+                }
+            }
+        },
+        "swagger_responses.HTTPErrorGetRequests": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "status bad request"
+                },
+                "requests": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "swagger_responses.RequestOkRes": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Next.js"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Алексей"
+                },
+                "surname": {
+                    "type": "string",
+                    "example": "Тимошин"
+                },
+                "test_id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Вакансия frontend"
+                }
+            }
+        }
+    }
+}
