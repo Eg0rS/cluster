@@ -17,7 +17,7 @@ type DbUserRepository struct {
 func (r *DbUserRepository) GetById(userId int) (*User, error) {
 	user := &User{}
 	rows, err := r.db.Query(`
-			select top 1 * from users as u
+			select * from users as u
 				where u.id = $1
 		`,
 		userId,
@@ -51,8 +51,7 @@ func (r *DbUserRepository) GetById(userId int) (*User, error) {
 func (r *DbUserRepository) GetByUserName(email string) (*User, error) {
 	user := &User{}
 	rows, err := r.db.Query(`
-			select 
-					 * from users as u
+			select  * from users as u
 				where u.email = $1
 		`,
 		email,
