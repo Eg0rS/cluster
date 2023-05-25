@@ -1,4 +1,4 @@
 {
-  "port": 81,
+  "port": 80,
   "postgres": "postgres://usercase17:usercase17password@database:5432/case17?search_path=public&sslmode=disable"
 }
