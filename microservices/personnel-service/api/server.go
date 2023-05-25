@@ -26,11 +26,11 @@ func NewServer(
 
 	router.HandleFunc("/ping", handler.PingHandle(logger)).Methods(http.MethodGet)
 
-	router.HandleFunc("/personnel/new/radio_test", request.CreateRadioTestHandler(logger, personnelService)).Methods(http.MethodPost)
-	router.HandleFunc("/personnel/new/text_test", request.CreateTextTest(logger, personnelService)).Methods(http.MethodPost)
-	router.HandleFunc("/personnel/new/request", request.CreateRequestHandler(logger, personnelService)).Methods(http.MethodPost)
-	router.HandleFunc("/personnel/get/requests/{user_id}", request.GetAllRequestsById(logger, personnelService)).Methods(http.MethodGet)
-	router.HandleFunc("/personnel/get/test/{test_id}", request.GetTestsByTestIdHandler(logger, personnelService)).Methods(http.MethodGet)
+	router.HandleFunc("/new/radio_test", request.CreateRadioTestHandler(logger, personnelService)).Methods(http.MethodPost)
+	router.HandleFunc("/new/text_test", request.CreateTextTest(logger, personnelService)).Methods(http.MethodPost)
+	router.HandleFunc("/new/request", request.CreateRequestHandler(logger, personnelService)).Methods(http.MethodPost)
+	router.HandleFunc("/get/requests/{user_id}", request.GetAllRequestsById(logger, personnelService)).Methods(http.MethodGet)
+	router.HandleFunc("/get/test/{test_id}", request.GetTestsByTestIdHandler(logger, personnelService)).Methods(http.MethodGet)
 
 	// swagger
 	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
