@@ -6,8 +6,16 @@ import (
 	"auth/utils/dbUtils"
 	"context"
 	"log"
+
+	_ "auth/docs"
 )
 
+//	@title			Swagger of API
+//	@version		1.0
+//	@description	This is a sample server celler server.
+
+// @host		localhost:80
+// @BasePath	/
 func main() {
 	log.SetFlags(log.Flags() | log.Llongfile)
 
