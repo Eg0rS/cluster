@@ -6,7 +6,6 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "https://cpt1.osinit.net/profile-service",
     "basePath": "/",
     "paths": {
         "/ping": {
