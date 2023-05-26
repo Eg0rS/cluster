@@ -10,6 +10,8 @@ type AddOrganizationModel struct {
 type OrganizationInfo struct {
 	Name    string `json:"name"`
 	Address string `json:"address"`
+	X       float64
+	Y       float64
 }
 
 type GetOrganizationsModel struct {

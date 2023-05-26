@@ -350,6 +350,12 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
                 }
             }
         },
