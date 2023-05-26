@@ -23,7 +23,7 @@ COPY . .
 
 # Uncomment to build the app
 # Build the app
-RUN go build -o main .
+RUN go build -o --mount main .
 
 
 # Run the app
