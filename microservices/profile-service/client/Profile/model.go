@@ -8,4 +8,9 @@ type UpsertUserInfoReq struct {
 	University string `json:"university" example:"ИТМО"`
 	Age        int    `json:"age" example:"68"`
 	Education  string `json:"education" example:"Бакалавриат"`
+	UserType   string `json:"user_type"`
+}
+
+type GetUserInfoReq struct {
+	RefreshToken string `json:"refresh_token"`
 }

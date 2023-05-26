@@ -13,3 +13,15 @@ func MapClientToServiceUpsertInfo(req UpsertUserInfoReq) model.UpsertUserInfoMod
 		Education:  req.Education,
 	}
 }
+
+func MapServiceUpsertInfoToClient(req model.UpsertUserInfoModel) UpsertUserInfoReq {
+	return UpsertUserInfoReq{
+		FirstName:  req.FirstName,
+		Surname:    req.Surname,
+		Patronymic: req.Patronymic,
+		City:       req.City,
+		University: req.University,
+		Age:        req.Age,
+		Education:  req.Education,
+	}
+}

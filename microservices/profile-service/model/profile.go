@@ -8,4 +8,5 @@ type UpsertUserInfoModel struct {
 	University string
 	Age        int
 	Education  string
+	UserType   int
 }

@@ -26,6 +26,7 @@ func NewServer(
 	router.HandleFunc("/ping", handler.PingHandle(logger)).Methods(http.MethodGet)
 
 	router.HandleFunc("/update/{user_id}", handler.UpsertUserInfoHandler(logger, profileService)).Methods(http.MethodGet)
+	router.HandleFunc("/get/info", handler.GetUserInfoHandler(logger, profileService)).Methods(http.MethodPost)
 
 	// swagger
 	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
