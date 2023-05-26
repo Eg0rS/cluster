@@ -16,6 +16,129 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/get/organizations": {
+            "get": {
+                "description": "Get all organization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "organization"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/organization.OrganizationsInfoResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetOrganizationsModel"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetOrganizationsModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/new/organization": {
+            "post": {
+                "description": "Add organization",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "organization"
+                ],
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/organization.AddOrganizationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/organization.AddOrganizationResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/organization.AddOrganizationBadResponse"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/organization.AddOrganizationBadResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/new/request": {
+            "post": {
+                "description": "Create request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "personnel"
+                ],
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/personnel.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.CreateRequestOkRes"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateRequest"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateRequest"
+                        }
+                    }
+                }
+            }
+        },
         "/personnel/get/requests/{user_id}": {
             "get": {
                 "description": "Get all requests by user id",
@@ -146,50 +269,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/personnel/new/request": {
-            "post": {
-                "description": "Create request",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "personnel"
-                ],
-                "parameters": [
-                    {
-                        "description": "query params",
-                        "name": "request",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/personnel.Request"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/swagger_responses.CreateRequestOkRes"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateRequest"
-                        }
-                    },
-                    "501": {
-                        "description": "Not Implemented",
-                        "schema": {
-                            "$ref": "#/definitions/swagger_responses.HTTPErrorCreateRequest"
-                        }
-                    }
-                }
-            }
-        },
         "/personnel/new/text_test": {
             "post": {
                 "description": "Create text test and return test id",
@@ -255,6 +334,95 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.GetOrganizationsModel": {
+            "type": "object",
+            "properties": {
+                "organizations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.OrganizationInfo"
+                    }
+                }
+            }
+        },
+        "model.OrganizationInfo": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "organization.AddOrganizationBadResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "bad request"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 0
+                }
+            }
+        },
+        "organization.AddOrganizationRequest": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "first_coordinate": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "second_coordinate": {
+                    "type": "number"
+                }
+            }
+        },
+        "organization.AddOrganizationResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": ""
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "organization.OrgInfoResponse": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string",
+                    "example": "st. Washington Jonson street h.27"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Amazon"
+                }
+            }
+        },
+        "organization.OrganizationsInfoResponse": {
+            "type": "object",
+            "properties": {
+                "organizations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/organization.OrgInfoResponse"
+                    }
+                }
+            }
+        },
         "personnel.Answer": {
             "type": "object",
             "properties": {
@@ -310,6 +478,9 @@ const docTemplate = `{
             "properties": {
                 "description": {
                     "type": "string"
+                },
+                "organization_id": {
+                    "type": "integer"
                 },
                 "test_id": {
                     "type": "integer"

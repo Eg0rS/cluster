@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	organization "personnel_service/client/Organization"
 	personnel "personnel_service/client/Personnel"
 	"personnel_service/database/pesrsonnel_repo"
 	"personnel_service/model"
@@ -19,6 +20,8 @@ type PersonnelRepo interface {
 	InsertRequest(ctx context.Context, reqModel model.Request) error
 	GetAllRequests(ctx context.Context, userId string) ([]pesrsonnel_repo.Request, error)
 	GetTestById(ctx context.Context, testId string) (model.RadioTest, error)
+	InsertOrganization(ctx context.Context, organizationModel model.AddOrganizationModel) (int, error)
+	SelectOrganizations(ctx context.Context) (model.GetOrganizationsModel, error)
 }
 
 type PersonnelService struct {
@@ -98,4 +101,23 @@ func (s PersonnelService) GetTestByTestId(ctx context.Context, testId string) (p
 	var data = personnel.MapServiceRadioTestModelToRequestModel(models)
 
 	return data, nil
+}
+
+func (s PersonnelService) AddOrganizations(ctx context.Context, request organization.AddOrganizationRequest) (int, error) {
+	data := organization.MapAddOrganizationReqToModel(request)
+	id, err := s.repo.InsertOrganization(ctx, data)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
+
+func (s PersonnelService) GetOrganizations(ctx context.Context) (model.GetOrganizationsModel, error) {
+	organizations, err := s.repo.SelectOrganizations(ctx)
+	if err != nil {
+		return model.GetOrganizationsModel{}, err
+	}
+
+	return organizations, nil
 }

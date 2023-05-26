@@ -19,10 +19,11 @@ type Answer struct {
 }
 
 type Request struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	TestId      int    `json:"test_id"`
-	UserId      int    `json:"user_id"`
+	Title        string `json:"title"`
+	Description  string `json:"description"`
+	TestId       int    `json:"test_id"`
+	UserId       int    `json:"user_id"`
+	Organization int    `json:"organization_id"`
 }
 
 type TextTest struct {

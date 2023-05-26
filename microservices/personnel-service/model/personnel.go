@@ -20,10 +20,11 @@ type Answer struct {
 }
 
 type Request struct {
-	Title       string
-	Description string
-	TestId      int
-	UserId      int
+	Title          string
+	Description    string
+	TestId         int
+	UserId         int
+	OrganizationId int
 }
 
 type GetRequests struct {

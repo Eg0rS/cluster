@@ -28,3 +28,7 @@ SELECT id, question_text  FROM TestQuestion WHERE test_id = $1;
 const GetAnswersByQuestionId = `
 SELECT answer, is_right FROM QuestionAnswer where question_id = $1;
 `
+
+const GetOrganizationsSql = `
+	SELECT org_name, address from Organizations;
+`

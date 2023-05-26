@@ -26,6 +26,15 @@ create table if not exists QuestionAnswer
     foreign key (question_id) references TestQuestion (id)
 );
 
+create table if not exists Organizations
+(
+    id      serial primary key,
+    org_name    text not null,
+    address text not null,
+    first_coordinates decimal not null,
+    second_coordinates decimal not null
+);
+
 create table if not exists PersonnelRequest
 (
     id                  serial primary key,
@@ -33,9 +42,11 @@ create table if not exists PersonnelRequest
     request_description varchar not null,
     test_id             int     not null,
     user_id             int     not null,
+    organization_id     int     not null,
 
     foreign key (user_id) references Users (id),
-    foreign key (test_id) references PersonnelTest (id)
+    foreign key (test_id) references PersonnelTest (id),
+    foreign key (organization_id) references Organizations (id)
 );
 
 create table if not exists TestFile
