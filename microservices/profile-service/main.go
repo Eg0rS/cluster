@@ -8,6 +8,8 @@ import (
 	"profile_service/config"
 	"syscall"
 	"time"
+
+	_ "profile_service/docs"
 )
 
 //	@title			Swagger of API

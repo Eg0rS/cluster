@@ -14,6 +14,110 @@
                 "description": "ping-pong ops...",
                 "responses": {}
             }
+        },
+        "/update/{user_id}": {
+            "post": {
+                "description": "Upsert user info",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/profile.UpsertUserInfoReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/profile_responses.UpsertGoodResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/profile_responses.UpsertBadResponse"
+                        }
+                    },
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/profile_responses.UpsertBadResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "profile.UpsertUserInfoReq": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 68
+                },
+                "city": {
+                    "type": "string",
+                    "example": "Москва"
+                },
+                "education": {
+                    "type": "string",
+                    "example": "Бакалавриат"
+                },
+                "firstname": {
+                    "type": "string",
+                    "example": "Владимир"
+                },
+                "patronymic": {
+                    "type": "string",
+                    "example": "Владимирович"
+                },
+                "surname": {
+                    "type": "string",
+                    "example": "Путин"
+                },
+                "university": {
+                    "type": "string",
+                    "example": "ИТМО"
+                }
+            }
+        },
+        "profile_responses.UpsertBadResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "Bad request, error on service"
+                }
+            }
+        },
+        "profile_responses.UpsertGoodResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": ""
+                }
+            }
         }
     }
 }

@@ -19,11 +19,13 @@ func NewServer(
 	ctxProvider pctx.DefaultProvider,
 	logger *zap.SugaredLogger,
 	settings config.Settings,
-	personnelService service.ProfileService,
+	profileService service.ProfileService,
 ) *http.Server {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/ping", handler.PingHandle(logger)).Methods(http.MethodGet)
+
+	router.HandleFunc("/update/{user_id}", handler.UpsertUserInfoHandler(logger, profileService)).Methods(http.MethodGet)
 
 	// swagger
 	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)

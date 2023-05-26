@@ -1,4 +1,41 @@
 basePath: /
+definitions:
+  profile.UpsertUserInfoReq:
+    properties:
+      age:
+        example: 68
+        type: integer
+      city:
+        example: Москва
+        type: string
+      education:
+        example: Бакалавриат
+        type: string
+      firstname:
+        example: Владимир
+        type: string
+      patronymic:
+        example: Владимирович
+        type: string
+      surname:
+        example: Путин
+        type: string
+      university:
+        example: ИТМО
+        type: string
+    type: object
+  profile_responses.UpsertBadResponse:
+    properties:
+      error:
+        example: Bad request, error on service
+        type: string
+    type: object
+  profile_responses.UpsertGoodResponse:
+    properties:
+      error:
+        example: ""
+        type: string
+    type: object
 host: localhost:80
 info:
   contact: {}
@@ -10,4 +47,37 @@ paths:
     get:
       description: ping-pong ops...
       responses: {}
+  /update/{user_id}:
+    post:
+      consumes:
+      - application/json
+      description: Upsert user info
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: query params
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/profile.UpsertUserInfoReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/profile_responses.UpsertGoodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/profile_responses.UpsertBadResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/profile_responses.UpsertBadResponse'
+      tags:
+      - profile
 swagger: "2.0"
