@@ -77,12 +77,12 @@ func (r ProfileRepository) SelectUserInfo(ctx context.Context, refreshToken stri
 	var userInfo model.UpsertUserInfoModel
 	var userId int
 
-	err := r.db.SelectContext(ctx, &userId, "SELECT user_id FROM refresh_tokens where refresh_token = ?", refreshToken)
+	err := r.db.SelectContext(ctx, &userId, "SELECT user_id FROM refresh_tokens where refresh_token = ?;", refreshToken)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
 	}
 
-	err = r.db.SelectContext(ctx, userInfo, "SELECT * FROM users where id = ?", userId)
+	err = r.db.SelectContext(ctx, userInfo, "SELECT * FROM users where id = ?;", userId)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
 	}
