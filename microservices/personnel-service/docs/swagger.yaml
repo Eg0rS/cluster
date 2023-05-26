@@ -180,8 +180,6 @@ info:
 paths:
   /get/organizations:
     get:
-      consumes:
-      - application/json
       description: Get all organization
       produces:
       - application/json

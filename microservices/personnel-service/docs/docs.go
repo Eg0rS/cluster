@@ -19,9 +19,6 @@ const docTemplate = `{
         "/get/organizations": {
             "get": {
                 "description": "Get all organization",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
