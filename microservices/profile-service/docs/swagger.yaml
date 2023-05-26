@@ -36,7 +36,7 @@ definitions:
         example: ""
         type: string
     type: object
-host: localhost:80
+host: https://cpt1.osinit.net/profile-service
 info:
   contact: {}
   description: This is a sample server celler server.

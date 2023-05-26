@@ -16,7 +16,7 @@ import (
 //	@version		1.0
 //	@description	This is a sample server celler server.
 
-// @host		localhost:80
+// @host		https://cpt1.osinit.net/personnel-service
 // @BasePath	/
 func main() {
 	logger, err := zap.NewDevelopment()
