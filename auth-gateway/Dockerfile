@@ -8,6 +8,7 @@ WORKDIR /go/src/app
 # Install libvips
 RUN apt-get update && apt-get install -y libvips-dev
 
+RUN --mount=type=cache,target=/cache/ /bin/bash -c "set -ex;"
 # Copy go.mod and go.sum
 COPY go.mod go.sum ./
 
@@ -23,7 +24,7 @@ COPY . .
 
 # Uncomment to build the app
 # Build the app
-RUN go build -o --mount main .
+RUN go build -o main .
 
 
 # Run the app
