@@ -19,7 +19,7 @@ import (
 //		@Success		200	{object}	swagger_responses.CreateRequestOkRes
 //	 	@Failure        400 {object}    swagger_responses.HTTPErrorCreateRequest
 //	 	@Failure        501 {object}    swagger_responses.HTTPErrorCreateRequest
-//		@Router			/personnel/new/request [post]
+//		@Router			/new/request [post]
 func CreateRequestHandler(logger *zap.SugaredLogger, personnelService service.PersonnelService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (

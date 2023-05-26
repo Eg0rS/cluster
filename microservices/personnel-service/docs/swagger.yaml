@@ -1,5 +1,64 @@
 basePath: /
 definitions:
+  model.GetOrganizationsModel:
+    properties:
+      organizations:
+        items:
+          $ref: '#/definitions/model.OrganizationInfo'
+        type: array
+    type: object
+  model.OrganizationInfo:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+    type: object
+  organization.AddOrganizationBadResponse:
+    properties:
+      error:
+        example: bad request
+        type: string
+      id:
+        example: 0
+        type: integer
+    type: object
+  organization.AddOrganizationRequest:
+    properties:
+      address:
+        type: string
+      first_coordinate:
+        type: number
+      name:
+        type: string
+      second_coordinate:
+        type: number
+    type: object
+  organization.AddOrganizationResponse:
+    properties:
+      error:
+        example: ""
+        type: string
+      id:
+        example: 1
+        type: integer
+    type: object
+  organization.OrgInfoResponse:
+    properties:
+      address:
+        example: st. Washington Jonson street h.27
+        type: string
+      name:
+        example: Amazon
+        type: string
+    type: object
+  organization.OrganizationsInfoResponse:
+    properties:
+      organizations:
+        items:
+          $ref: '#/definitions/organization.OrgInfoResponse'
+        type: array
+    type: object
   personnel.Answer:
     properties:
       is_right:
@@ -36,6 +95,8 @@ definitions:
     properties:
       description:
         type: string
+      organization_id:
+        type: integer
       test_id:
         type: integer
       title:
@@ -117,6 +178,85 @@ info:
   title: Swagger of API
   version: "1.0"
 paths:
+  /get/organizations:
+    get:
+      consumes:
+      - application/json
+      description: Get all organization
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/organization.OrganizationsInfoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.GetOrganizationsModel'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/model.GetOrganizationsModel'
+      tags:
+      - organization
+  /new/organization:
+    post:
+      consumes:
+      - application/json
+      description: Add organization
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/organization.AddOrganizationRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/organization.AddOrganizationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/organization.AddOrganizationBadResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/organization.AddOrganizationBadResponse'
+      tags:
+      - organization
+  /new/request:
+    post:
+      consumes:
+      - application/json
+      description: Create request
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/personnel.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/swagger_responses.CreateRequestOkRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateRequest'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/swagger_responses.HTTPErrorCreateRequest'
+      tags:
+      - personnel
   /personnel/get/requests/{user_id}:
     get:
       consumes:
@@ -199,34 +339,6 @@ paths:
           description: Not Implemented
           schema:
             $ref: '#/definitions/swagger_responses.HTTPErrorCreateTest'
-      tags:
-      - personnel
-  /personnel/new/request:
-    post:
-      consumes:
-      - application/json
-      description: Create request
-      parameters:
-      - description: query params
-        in: body
-        name: request
-        schema:
-          $ref: '#/definitions/personnel.Request'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/swagger_responses.CreateRequestOkRes'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/swagger_responses.HTTPErrorCreateRequest'
-        "501":
-          description: Not Implemented
-          schema:
-            $ref: '#/definitions/swagger_responses.HTTPErrorCreateRequest'
       tags:
       - personnel
   /personnel/new/text_test:

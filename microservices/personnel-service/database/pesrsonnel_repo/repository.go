@@ -107,8 +107,8 @@ func (r PersonnelRepository) InsertTextTest(ctx context.Context, testModel model
 func (r PersonnelRepository) InsertRequest(ctx context.Context, reqModel model.Request) error {
 	var psql = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 	builder := psql.Insert("PersonnelRequest").
-		Columns("request_title", "request_description", "test_id", "user_id").
-		Values(reqModel.Title, reqModel.Description, reqModel.TestId, reqModel.UserId).
+		Columns("request_title", "request_description", "test_id", "user_id", "organization_id").
+		Values(reqModel.Title, reqModel.Description, reqModel.TestId, reqModel.UserId, reqModel.OrganizationId).
 		RunWith(r.db)
 	sqlQuery, args, err := builder.ToSql()
 	if err != nil {
@@ -272,4 +272,51 @@ func (r PersonnelRepository) GetTestById(ctx context.Context, testId string) (mo
 	}
 
 	return model.RadioTest{}, nil
+}
+
+func (r PersonnelRepository) InsertOrganization(ctx context.Context, organizationModel model.AddOrganizationModel) (int, error) {
+	var (
+		psql           = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
+		organizationId int
+	)
+
+	builder := psql.Insert("Organizations").
+		Columns("org_name", "address", "first_coordinates", "second_coordinates").
+		Values(organizationModel.Name, organizationModel.Address, organizationModel.FirstCoordinate, organizationModel.SecondCoordinate).
+		Suffix("RETURNING \"id\"").
+		RunWith(r.db)
+	err := builder.QueryRowContext(ctx).Scan(&organizationId)
+	if err != nil {
+		return 0, err
+	}
+
+	return organizationId, nil
+}
+
+func (r PersonnelRepository) SelectOrganizations(ctx context.Context) (model.GetOrganizationsModel, error) {
+	var (
+		organisations []model.OrganizationInfo
+	)
+
+	rows, err := r.db.QueryContext(ctx, query.GetOrganizationsSql)
+	if err != nil {
+		return model.GetOrganizationsModel{}, err
+	}
+
+	for rows.Next() {
+		var (
+			name    string
+			address string
+		)
+
+		err := rows.Scan(&name, &address)
+		if err != nil {
+			return model.GetOrganizationsModel{}, err
+		}
+
+		org := model.OrganizationInfo{Address: address, Name: name}
+		organisations = append(organisations, org)
+	}
+
+	return model.GetOrganizationsModel{Organizations: organisations}, nil
 }

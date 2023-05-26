@@ -8,6 +8,7 @@ import (
 	"net"
 	"net/http"
 	"personnel_service/api/handler"
+	organization "personnel_service/api/handler/organization"
 	request "personnel_service/api/handler/request"
 	"personnel_service/config"
 	"personnel_service/lib/pctx"
@@ -31,6 +32,9 @@ func NewServer(
 	router.HandleFunc("/new/request", request.CreateRequestHandler(logger, personnelService)).Methods(http.MethodPost)
 	router.HandleFunc("/get/requests/{user_id}", request.GetAllRequestsById(logger, personnelService)).Methods(http.MethodGet)
 	router.HandleFunc("/get/test/{test_id}", request.GetTestsByTestIdHandler(logger, personnelService)).Methods(http.MethodGet)
+
+	router.HandleFunc("/new/organization", organization.AddOrganizationHandler(logger, personnelService)).Methods(http.MethodPost)
+	router.HandleFunc("/get/organizations", organization.GetAllOrganizationsHandler(logger, personnelService)).Methods(http.MethodGet)
 
 	// swagger
 	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)

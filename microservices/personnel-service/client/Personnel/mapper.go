@@ -44,10 +44,11 @@ func MapServiceRadioTestModelToRequestModel(testModel model.RadioTest) RadioTest
 
 func MapRequestRequestModelToServiceRequestModel(modelReq Request) model.Request {
 	return model.Request{
-		Title:       modelReq.Title,
-		Description: modelReq.Description,
-		TestId:      modelReq.TestId,
-		UserId:      modelReq.UserId,
+		Title:          modelReq.Title,
+		Description:    modelReq.Description,
+		TestId:         modelReq.TestId,
+		UserId:         modelReq.UserId,
+		OrganizationId: modelReq.Organization,
 	}
 }
 
