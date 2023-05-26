@@ -26,11 +26,11 @@ func NewApp(ctxProvider pctx.DefaultProvider, logger *zap.SugaredLogger, setting
 	}
 
 	var (
-		personnelRepo = profile_repo.NewProfileRepository(logger, pgDb)
+		profileRepo = profile_repo.NewProfileRepository(logger, pgDb)
 
-		personnelService = service.NewProfileService(logger, personnelRepo)
+		profileService = service.NewProfileService(logger, profileRepo)
 
-		server = api.NewServer(ctxProvider, logger, settings, personnelService)
+		server = api.NewServer(ctxProvider, logger, settings, profileService)
 	)
 
 	return App{
