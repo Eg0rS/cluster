@@ -98,6 +98,23 @@ services:
         reservations:
           memory: 200M
 
+  profile-service:
+    build:
+      context: microservices/profile-service
+    environment:
+      "env": "prod"
+    depends_on:
+      - databaseA
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 200M
+
   # register-service:
   #   build:
   #    context: microservices/register-service
