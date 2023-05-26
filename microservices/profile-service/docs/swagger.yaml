@@ -1,5 +1,10 @@
 basePath: /
 definitions:
+  profile.GetUserInfoReq:
+    properties:
+      refresh_token:
+        type: string
+    type: object
   profile.UpsertUserInfoReq:
     properties:
       age:
@@ -23,6 +28,8 @@ definitions:
       university:
         example: ИТМО
         type: string
+      user_type:
+        type: string
     type: object
   profile_responses.UpsertBadResponse:
     properties:
@@ -42,6 +49,35 @@ info:
   title: Swagger of API
   version: "1.0"
 paths:
+  /get/info:
+    post:
+      consumes:
+      - application/json
+      description: Get user info
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/profile.GetUserInfoReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/profile.UpsertUserInfoReq'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/profile_responses.UpsertBadResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/profile_responses.UpsertBadResponse'
+      tags:
+      - profile
   /ping:
     get:
       description: ping-pong ops...

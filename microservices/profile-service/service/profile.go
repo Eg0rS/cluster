@@ -10,6 +10,7 @@ import (
 
 type ProfileRepo interface {
 	UpsertUserInfo(ctx context.Context, model model.UpsertUserInfoModel, userId string) error
+	SelectUserInfo(ctx context.Context, refreshToken string) (model.UpsertUserInfoModel, error)
 }
 
 type ProfileService struct {
@@ -32,4 +33,13 @@ func (s ProfileService) UpsertUserInfo(ctx context.Context, req profile.UpsertUs
 	}
 
 	return nil
+}
+
+func (s ProfileService) GetUserInfo(ctx context.Context, refreshToken string) (model.UpsertUserInfoModel, error) {
+	data, err := s.repo.SelectUserInfo(ctx, refreshToken)
+	if err != nil {
+		return model.UpsertUserInfoModel{}, err
+	}
+
+	return data, nil
 }
