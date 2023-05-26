@@ -57,6 +57,4 @@ create table if not exists TestFile
 
     foreign key (test_id) references PersonnelTest (id)
 );
-
 -- +goose Down
-drop table if exists PersonnelTest;

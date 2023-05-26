@@ -15,6 +15,11 @@ func NewApp(settings config.Settings) App {
 		panic(err)
 	}
 
+	err = database.ResetMigrations(pgDb)
+	if err != nil {
+		panic(err)
+	}
+
 	err = database.UpMigrations(pgDb)
 	if err != nil {
 		panic(err)
