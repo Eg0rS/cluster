@@ -104,7 +104,7 @@ services:
     environment:
       "env": "prod"
     depends_on:
-      - databaseA
+      - database
     networks:
       - backend
     deploy:
