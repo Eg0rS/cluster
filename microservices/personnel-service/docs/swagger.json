@@ -6,7 +6,6 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "https://cpt1.osinit.net/personnel-service",
     "basePath": "/",
     "paths": {
         "/personnel/get/requests/{user_id}": {

@@ -15,8 +15,7 @@ import (
 //	@title			Swagger of API
 //	@version		1.0
 //	@description	This is a sample server celler server.
-
-// @host		https://cpt1.osinit.net/personnel-service
+//
 // @BasePath	/
 func main() {
 	logger, err := zap.NewDevelopment()
