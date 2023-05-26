@@ -13,7 +13,6 @@ import (
 //
 //		@Description	Get all organization
 //		@Tags			organization
-//		@Accept			json
 //		@Produce		json
 //		@Success		200	{object}	organization.OrganizationsInfoResponse
 //	 	@Failure        400 {object}    model.GetOrganizationsModel
