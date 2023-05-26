@@ -48,3 +48,11 @@ const UpsertUserEducation = `
 	on conflict (education) do update set education = excluded.education
     where id = $2;
 `
+
+const GetUserIdByTokenSql = `
+SELECT user_id FROM refresh_tokens where refresh_token = ?;
+`
+
+const GetUserInfoById = `
+SELECT * FROM users where id = ?;
+`
