@@ -72,3 +72,20 @@ func (r ProfileRepository) UpsertUserInfo(ctx context.Context, model model.Upser
 
 	return nil
 }
+
+func (r ProfileRepository) SelectUserInfo(ctx context.Context, refreshToken string) (model.UpsertUserInfoModel, error) {
+	var userInfo model.UpsertUserInfoModel
+	var userId int
+
+	err := r.db.SelectContext(ctx, &userId, query.GetUserIdByTokenSql, refreshToken)
+	if err != nil {
+		return model.UpsertUserInfoModel{}, err
+	}
+
+	err = r.db.SelectContext(ctx, userInfo, query.GetUserInfoById, userId)
+	if err != nil {
+		return model.UpsertUserInfoModel{}, err
+	}
+
+	return userInfo, nil
+}

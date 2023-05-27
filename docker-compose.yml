@@ -30,6 +30,23 @@ services:
     extra_hosts:
     - "host.docker.internal:host-gateway"
 
+  curator-service:
+    build:
+      context: microservices/curator-service
+    environment:
+      "env": "prod"
+    depends_on:
+      - database
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 200M
+  
   auth-gateway:
     build:
      context: auth-gateway
@@ -115,6 +132,9 @@ services:
         reservations:
           memory: 200M
 
+
+   
+
   # register-service:
   #   build:
   #    context: microservices/register-service
@@ -144,6 +164,7 @@ services:
   #         memory: 1024M
   #       reservations:
   #         memory: 200M  
+
 networks:
   backend:
    driver: bridge

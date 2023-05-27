@@ -30,5 +30,5 @@ SELECT answer, is_right FROM QuestionAnswer where question_id = $1;
 `
 
 const GetOrganizationsSql = `
-	SELECT org_name, address from Organizations;
+	SELECT org_name, address, first_coordinates, second_coordinates from Organizations;
 `

@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS users
     university           text               NOT NULL,
     age                  integer            NOT NULL,
     education            text               NOT NULL,
-    direction_internship text               NOT NULL
+    direction_internship text               NOT NULL,
+    user_type            int
 );
 -- +goose Down
 

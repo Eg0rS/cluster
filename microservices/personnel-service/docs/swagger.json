@@ -11,9 +11,6 @@
         "/get/organizations": {
             "get": {
                 "description": "Get all organization",
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -345,6 +342,12 @@
                 },
                 "name": {
                     "type": "string"
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
                 }
             }
         },

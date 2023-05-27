@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "A8D28dRI4SHlJZdni78SddaiEqm6o3MoX358eJxD0gc=",
+  "Source": "curator-service",
+  "BasePath": "_content/curator-service",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -307,14 +307,16 @@ func (r PersonnelRepository) SelectOrganizations(ctx context.Context) (model.Get
 		var (
 			name    string
 			address string
+			x       float64
+			y       float64
 		)
 
-		err := rows.Scan(&name, &address)
+		err := rows.Scan(&name, &address, &x, &y)
 		if err != nil {
 			return model.GetOrganizationsModel{}, err
 		}
 
-		org := model.OrganizationInfo{Address: address, Name: name}
+		org := model.OrganizationInfo{Address: address, Name: name, X: x, Y: y}
 		organisations = append(organisations, org)
 	}
 
