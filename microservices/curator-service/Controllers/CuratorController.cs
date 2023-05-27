@@ -8,6 +8,12 @@ namespace curator_service.Controllers
     // [Authorize]
     public class CuratorController : Controller
     {
+        /// <summary>
+        /// Выводит список поданых заявок с фильтром.
+        /// </summary>
+        /// <param name="filter">Фильтрация заявок. Возможные значения: recommended, non-recommended, не указано (без фильтра)</param>
+        /// <response code="200">Успех. Выводится список заявок.</response>
+        /// <response code="500">Внутренняя ошибка. Не были получены заявки от стороннего МКС-а.</response>
         [Route("trainee-requests")]
         [HttpGet]
         public JsonResult GetTraineeRequests([FromQuery] string filter)
@@ -25,6 +31,12 @@ namespace curator_service.Controllers
                     : new JsonResult(requests);
         }
 
+
+        /// <summary>
+        /// Выводит список поданых заявок на стажеров от кадров.
+        /// </summary>
+        /// <response code="200">Успех. Выводится список заявок.</response>
+        /// <response code="500">Внутренняя ошибка. Не были получены заявки от стороннего МКС-а.</response>
         [Route("card-requests")]
         [HttpGet]
         public JsonResult GetCadrRequests()
@@ -39,6 +51,12 @@ namespace curator_service.Controllers
             return new JsonResult(requests);
         }
 
+        /// <summary>
+        /// Редактирует заявки на стажеров от кадров. 
+        /// </summary>
+        /// <param name="request">Обновленная заявка на стажера.</param>
+        /// <response code="200">Успех. Заявка была успешно изменена.</response>
+        /// <response code="500">Внутренняя ошибка. Не была получена информация от стороннего МКС-а.</response>
         [Route("card-requests")]
         [HttpPut]
         public JsonResult UpdateCadrRequests([FromBody] CadrRequest request)
@@ -61,6 +79,34 @@ namespace curator_service.Controllers
 
             return new JsonResult(StatusCode(200));
         }
+
+        /// <summary>
+        /// Выводит список наставников, которые прошли обучение в школе наставников, а так же информацию о них.
+        /// </summary>
+        /// <response code="200">Успех.</response>
+        /// <response code="500">Внутренняя ошибка. Не была получена информация от стороннего МКС-а.</response>
+        [Route("teachers")]
+        [HttpGet]
+        public JsonResult GetTeachersData()
+        {
+            var teachers = new List<Teacher> { };
+            // обращение к мкс
+
+            if(teachers == null)
+            {
+                return new JsonResult(StatusCode(500));
+            }
+
+            return new JsonResult(teachers.Where(
+                    x => x.IsCompletedSchool
+                ));
+        }
+
+        /// <summary>
+        /// Выводит статистику по заявкам от кандидатов на стажеров и от стажеров.
+        /// </summary>
+        /// <response code="200">Успех.</response>
+        /// <response code="500">Внутренняя ошибка. Не была получена информация от стороннего МКС-а.</response>
 
         [Route("statistics")]
         [HttpGet]
