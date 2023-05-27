@@ -31,6 +31,7 @@ namespace curator_service.Controllers
                     : new JsonResult(requests);
         }
 
+
         /// <summary>
         /// Выводит список поданых заявок на стажеров от кадров.
         /// </summary>
@@ -106,6 +107,7 @@ namespace curator_service.Controllers
         /// </summary>
         /// <response code="200">Успех.</response>
         /// <response code="500">Внутренняя ошибка. Не была получена информация от стороннего МКС-а.</response>
+
         [Route("statistics")]
         [HttpGet]
         public JsonResult GetStatistics()
