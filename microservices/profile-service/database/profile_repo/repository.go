@@ -86,13 +86,13 @@ func (r ProfileRepository) SelectUserInfo(ctx context.Context, refreshToken stri
 
 	//SELECT user_id FROM refresh_tokens where refresh_token = ?;
 
-	builder := psql.Select("user_id").From("refresh_tokens").Where("refresh_token", "=", refreshToken)
+	builder := psql.Select("user_id").From("refresh_tokens").Where("refresh_token", "=", refreshToken).RunWith(r.db)
 	err := builder.Scan(&userId)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
 	}
 
-	builder = psql.Select("*").From("Organizations").Where("id", "=", userId)
+	builder = psql.Select("*").From("Organizations").Where("id", "=", userId).RunWith(r.db)
 	err = builder.Scan(&userInfo)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
