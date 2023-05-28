@@ -2,6 +2,7 @@ package profile_repo
 
 import (
 	"context"
+	"github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 	"profile_service/database/profile_repo/query"
@@ -76,16 +77,22 @@ func (r ProfileRepository) UpsertUserInfo(ctx context.Context, model model.Upser
 func (r ProfileRepository) SelectUserInfo(ctx context.Context, refreshToken string) (model.UpsertUserInfoModel, error) {
 	var userInfo model.UpsertUserInfoModel
 	var userId int
+	var psql = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 
 	err := r.db.SelectContext(ctx, &userId, query.GetUserIdByTokenSql, refreshToken)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
 	}
 
-	err = r.db.SelectContext(ctx, userInfo, query.GetUserInfoById, userId)
+	builder := psql.Select("*").From("Organizations").Where("id", "=", userId)
+	err = builder.Scan(&userInfo)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
 	}
+	////err = r.db.Select(ctx, &userInfo, builder, args)
+	//if err != nil {
+	//	return model.UpsertUserInfoModel{}, err
+	//}
 
 	return userInfo, nil
 }
