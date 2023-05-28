@@ -79,12 +79,20 @@ func (r ProfileRepository) SelectUserInfo(ctx context.Context, refreshToken stri
 	var userId int
 	var psql = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 
-	err := r.db.SelectContext(ctx, &userId, query.GetUserIdByTokenSql, refreshToken)
+	//err := r.db.SelectContext(ctx, &userId, query.GetUserIdByTokenSql, refreshToken)
+	//if err != nil {
+	//	return model.UpsertUserInfoModel{}, err
+	//}
+
+	//SELECT user_id FROM refresh_tokens where refresh_token = ?;
+
+	builder := psql.Select("user_id").From("refresh_tokens").Where("refresh_token", "=", refreshToken)
+	err := builder.Scan(&userId)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
 	}
 
-	builder := psql.Select("*").From("Organizations").Where("id", "=", userId)
+	builder = psql.Select("*").From("Organizations").Where("id", "=", userId)
 	err = builder.Scan(&userInfo)
 	if err != nil {
 		return model.UpsertUserInfoModel{}, err
